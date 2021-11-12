@@ -50,6 +50,7 @@ app.post("/register", (req, res) => {
 		return res.status(400).send("Unable to register");
 	}
 	const hash = bcrypt.hashSync(password, 10);
+	console.log(process.env.DATABASE_URL);
 	// transaction allows to either complete whole or none
 	db.transaction(trx => {
 		// trx is acting as db
