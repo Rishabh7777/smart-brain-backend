@@ -46,7 +46,6 @@ app.post("/signin", (req, res) => {
 // dependency injections
 app.post("/register", (req, res) => {
 	const {name, email, password} = req.body;
-	console.log(name);
 	if(!name || !email || !password) {
 		return res.status(400).send("Incorrect form submission");
 	}
