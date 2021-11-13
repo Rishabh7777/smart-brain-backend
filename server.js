@@ -46,6 +46,7 @@ app.post("/signin", (req, res) => {
 // dependency injections
 app.post("/register", (req, res) => {
 	const {name, email, password} = req.body;
+	console.log(name);
 	if(!name || !email || !password) {
 		return res.status(400).send("Incorrect form submission");
 	}
@@ -73,10 +74,7 @@ app.post("/register", (req, res) => {
 		.then(trx.commit)
 		.catch(trx.rollback);
 	})
-	.catch(err => {
-		res.status(400).json("Unable to store info")
-		console.log(err)
-	})
+	.catch(err => res.status(400).json("Unable to store info"))
 })
 
 // user profile
