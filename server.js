@@ -47,7 +47,7 @@ app.post("/signin", (req, res) => {
 app.post("/register", (req, res) => {
 	const {name, email, password} = req.body;
 	if(!name || !email || !password) {
-		return res.status(400).send("Unable to register");
+		return res.status(400).send("Incorrect form submission");
 	}
 	const hash = bcrypt.hashSync(password, 10);
 	// transaction allows to either complete whole or none
@@ -63,17 +63,17 @@ app.post("/register", (req, res) => {
 			return trx('users')
 			.returning('*')
 			.insert({
-				name: name,
 				email: loginEmail[0],
+				name: name,
 				joined: new Date()
 			})
-			.then(user => res.json(user))
+			.then(user => res.json(user[0]))
 			.catch(err => res.status(400).json("Unable to register"));
 		})
 		.then(trx.commit)
 		.catch(trx.rollback);
 	})
-	.catch(err => res.status(400).json("can't reach from GLA"))
+	.catch(err => res.status(400).json("Unable to store info"))
 })
 
 // user profile
